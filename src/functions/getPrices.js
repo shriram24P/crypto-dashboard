@@ -15,7 +15,7 @@ export const getPrices = async (id, days, type) => {
     return;
   }
 
-  if (type == "market_caps") return prices_data.data.market_caps;
-  else if (type == "total_volumes") return prices_data.data.total_volumes;
+  if (type === "market_caps") return prices_data.data.market_caps;
+  else if (type === "total_volumes") return prices_data.data.total_volumes;
   else return prices_data.data.prices;
 };
