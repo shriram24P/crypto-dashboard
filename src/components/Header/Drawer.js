@@ -1,11 +1,48 @@
 import { useState } from "react";
 import Drawer from "@mui/material/Drawer";
 import MenuIcon from "@mui/icons-material/Menu";
-import { IconButton } from "@mui/material";
+import { IconButton, Switch } from "@mui/material";
 import "./styles.css";
+import { MaterialUISwitch } from "./index";
+
 export default function TemporaryDrawer() {
   const [open, setOpen] = useState(false);
+  
+  const setDark = () => {
+    localStorage.setItem("theme", "dark");
+    document.documentElement.setAttribute("data-theme", "dark");
+  };
 
+  const setLight = () => {
+    localStorage.setItem("theme", "light");
+    document.documentElement.setAttribute("data-theme", "light");
+  };
+
+  const storedTheme = localStorage.getItem("theme");
+
+  const prefersDark =
+    window.matchMedia &&
+    window.matchMedia("(prefers-color-scheme: dark)").matches;
+
+  const defaultDark =
+    storedTheme === "dark" || (storedTheme === null && prefersDark);
+
+  const [darkTheme, setDarkTheme] = useState(
+    defaultDark == "dark" ? true : false
+  );
+
+  if (defaultDark) {
+    setDark();
+  }
+
+  const toggleTheme = (e) => {
+    if (!darkTheme) {
+      setDark();
+    } else {
+      setLight();
+    }
+    setDarkTheme(!darkTheme);
+  };
   return (
     <div>
       <div className="menu-button">
@@ -18,15 +55,20 @@ export default function TemporaryDrawer() {
           <a href="/">
             <p className="links">Home</p>
           </a>
-          <a href="/search">
-            <p className="links">Search</p>
-          </a>
-          <a href="/about-us">
-            <p className="links">About Us</p>
+          <a href="/compare">
+            <p className="links">Compare</p>
           </a>
           <a href="/dashboard">
             <p className="links">Dashboard</p>
           </a>
+          <p className="links">
+            <MaterialUISwitch
+            checked = {!defaultDark}
+              // defaultChecked
+              value={!darkTheme}
+              onClick={() => toggleTheme()}
+            />
+          </p>
         </div>
       </Drawer>
     </div>

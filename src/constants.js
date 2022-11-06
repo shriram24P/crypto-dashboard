@@ -5,4 +5,4 @@ export const APP_DESCRIPTION =
 export const APP_KEYWORDS =
   "CryptoTracker., crypto, tracker, crypto dashboard, dashboard";
 export const APP_AUTHOR = "Shriram Patil";
-export const APP_URL = "https://crypto-dashboard-avi.netlify.app/";
+export const APP_URL = "https://crypto-tracker024.netlify.app/";

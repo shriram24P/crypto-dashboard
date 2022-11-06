@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import Button from "../../Button";
 import OutlinedButton from "../../OutlinedButton";
 import { RWebShare } from "react-web-share";
+import { APP_URL } from "../../../constants";
 
 function LandingComponent() {
   return (
@@ -15,7 +16,7 @@ function LandingComponent() {
           className="big-heading"
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ type: "spring", duration: 1 }}
+          transition={{ type: "spring", duration: 2 }}
         >
           <span className="stroke">Track Crypto</span>
           <br />
@@ -32,7 +33,7 @@ function LandingComponent() {
           <RWebShare
             data={{
               text: "Checkout my crypto tracker made using React!",
-              url: "https://my-cryptotracker.com",
+              url: APP_URL,
               title: "Crypto Tracker",
             }}
             onClick={() => console.log("shared successfully!")}

@@ -4,7 +4,7 @@ import Header from "../components/Header";
 import LandingComponent from "../components/HomePageComponents/LandingComponent";
 function Home() {
   return (
-    <div>
+    <div style={{minHeigh: "100vh"}}>
       <Header />
       <LandingComponent />
       <Footer />

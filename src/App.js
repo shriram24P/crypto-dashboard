@@ -1,4 +1,5 @@
 import "./App.css";
+import Header from "./components/Header";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import Dashboard from "./pages/Dashboard";
@@ -10,8 +11,8 @@ import {
   APP_DESCRIPTION,
   APP_KEYWORDS,
   APP_NAME,
-  APP_URL
-} from "./constants.js";
+  APP_URL,
+} from "./constants";
 
 function App() {
   var cursor;
