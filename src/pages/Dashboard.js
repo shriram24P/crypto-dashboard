@@ -1,65 +1,49 @@
-import React, { useEffect, useState } from "react";
 import axios from "axios";
-import Header from "../components/Header";
-import Loader from "../components/Loader";
-import DashboardWrapper from "../components/DashboardComponents/DashboardWrapper";
-import Search from "../components/DashboardComponents/Search";
-import NorthRoundedIcon from "@mui/icons-material/NorthRounded";
-import IconButton from "@mui/material/IconButton";
-import PaginationComponent from "../components/DashboardComponents/PaginationComponent";
+import React, { useEffect, useState } from "react";
+import Header from "../components/Common/Header";
+import Search from "../components/Dashboard/Search/search";
+import Tabs from "../components/Dashboard/Tabs/tabs";
+import { DASHBOARD_API_URL } from "../constants";
+import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
+import Loading from "../components/Common/Loading/loading";
+import PaginationComponent from "../components/Dashboard/PaginationComponent/pagination";
 
-function Dashboard() {
-  const API_URL =
-    "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false";
-
+function DashboardPage() {
   const [data, setData] = useState([]);
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
-  const [page, setPage] = useState(1);
-  const [filteredCoins, setFilteredCoins] = useState([]);
+  const [pageNumber, setPageNumber] = useState(1);
+  const [pageCoins, setPageCoins] = useState([]);
 
-  useEffect(() => {
-    if (search) {
-      setFilteredCoins(
-        data?.filter(
-          (coin) =>
-            coin.name.toLowerCase().includes(search.toLowerCase()) ||
-            coin.symbol.toLowerCase().includes(search.toLowerCase())
-        )
-      );
-    } else {
-      setFilteredCoins(data.slice((page - 1) * 10, (page - 1) * 10 + 10));
+  var filteredCoins = data.filter((item) => {
+    if (
+      item.symbol.toLowerCase().includes(search.toLowerCase()) ||
+      item.name.toLowerCase().includes(search.toLowerCase())
+    ) {
+      return item;
     }
-  }, [search]);
-
-  const handleChange = (e) => {
-    setSearch(e.target.value);
-  };
-
-  const handlePageChange = (e, value) => {
-    setPage(value);
-    console.log("valueee", value);
-    setFilteredCoins(data.slice((value - 1) * 10, (value - 1) * 10 + 10));
-    console.log("filteredCoins", filteredCoins);
-    topFunction();
-  };
+  });
 
   useEffect(() => {
-    axios.get(API_URL, { crossDomain: true }).then((response) => {
-      if (response.data) {
-        console.log(response.data);
+    axios
+      .get(DASHBOARD_API_URL)
+      .then((response) => {
+        console.log("Response Data >>>", response.data);
         setData(response.data);
-        setFilteredCoins(
-          response.data.slice((page - 1) * 10, (page - 1) * 10 + 10)
-        );
         setLoading(false);
-      } else {
-        console.log("error");
-      }
-    });
+        setPageCoins(response.data.slice(0, 10));
+      })
+      .catch((error) => {
+        console.log("Error>>>", error);
+      });
   }, []);
 
-  let mybutton = document.getElementById("top-button");
+  function topFunction() {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+  }
+
+  let mybutton = document.getElementById("myBtn");
 
   window.onscroll = function () {
     scrollFunction();
@@ -67,47 +51,42 @@ function Dashboard() {
 
   function scrollFunction() {
     if (
-      document.body.scrollTop > 300 ||
-      document.documentElement.scrollTop > 300
+      document.body.scrollTop > 20 ||
+      document.documentElement.scrollTop > 20
     ) {
-      mybutton.style.display = "block";
+      mybutton.style.display = "flex";
     } else {
       mybutton.style.display = "none";
     }
   }
 
-  // When the user clicks on the button, scroll to the top of the document
-  function topFunction() {
-    document.body.scrollTop = 0; // For Safari
-    document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
-  }
+  const handleChange = (event, value) => {
+    setPageNumber(value);
+    setPageCoins(data.slice((value - 1) * 10, (value - 1) * 10 + 10));
+  };
 
   return (
-    <>
+    <div>
+      <Header />
       {loading ? (
-        <Loader />
+        <Loading />
       ) : (
         <>
-          <Header />
-          <Search handleChange={handleChange}  data={data}/>
-          <DashboardWrapper data={filteredCoins} />
+          <Search search={search} setSearch={setSearch} />
+          <Tabs data={search ? filteredCoins : pageCoins} />
+          <div onClick={() => topFunction()} id="myBtn" className="top-btn">
+            <ArrowUpwardIcon sx={{ color: "var(--blue)" }} />
+          </div>
           {!search && (
             <PaginationComponent
-              page={page}
-              handlePageChange={handlePageChange}
+              pageNumber={pageNumber}
+              handleChange={handleChange}
             />
           )}
-          <NorthRoundedIcon
-            className="top-button"
-            id="top-button"
-            onClick={() => {
-              topFunction();
-            }}
-          />
         </>
       )}
-    </>
+    </div>
   );
 }
 
-export default Dashboard;
+export default DashboardPage;

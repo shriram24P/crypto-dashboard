@@ -1,13 +1,13 @@
-import React from "react";
-import Footer from "../components/Footer";
-import Header from "../components/Header";
-import LandingComponent from "../components/HomePageComponents/LandingComponent";
+import React, { useEffect } from "react";
+import Header from "../components/Common/Header";
+import LandingIntro from "../components/LandingPage/Intro/index.js";
+
+
 function Home() {
   return (
-    <div style={{minHeigh: "100vh"}}>
+    <div>
       <Header />
-      <LandingComponent />
-      <Footer />
+      <LandingIntro />
     </div>
   );
 }
