@@ -5,7 +5,7 @@ import "./styles.css";
 function Search({ search, setSearch }) {
   return (
     <div className="search-box">
-      <SearchIcon sx={{ color: "var(--grey) !important" }} />
+      <SearchIcon sx={{ color: "var(--darkgrey) !important" }} />
       <input
         value={search}
         onChange={(e) => setSearch(e.target.value)}

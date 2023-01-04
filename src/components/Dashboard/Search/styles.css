@@ -14,7 +14,7 @@
   .search-box input {
     width: 100%;
     background-color: var(--darkgrey);
-    color: var(--lightgrey);
+    color: var(--white);
     font-family: "Inter", sans-serif;
     border: none;
   }

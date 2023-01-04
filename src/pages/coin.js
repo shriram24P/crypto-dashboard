@@ -12,6 +12,7 @@ import { convertNumbers } from "../functions/convertNumbers";
 import { getCoinData } from "../functions/getCoinData";
 import { getCoinPrices } from "../functions/getCoinPrices";
 import { getDate } from "../functions/getDate";
+import Footer from "../components/Common/Footer";
 
 function CoinPage() {
   const { id } = useParams();
@@ -173,6 +174,7 @@ function CoinPage() {
           </div>
         </>
       )}
+      <Footer />
     </div>
   );
 }

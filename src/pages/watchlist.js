@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Button from "../components/Common/Button/Button";
+import Footer from "../components/Common/Footer";
 import Header from "../components/Common/Header";
 import Tabs from "../components/Dashboard/Tabs/tabs";
 import { DASHBOARD_API_URL } from "../constants";
@@ -61,6 +62,7 @@ function WatchListPage() {
           </div>
         )}
       </div>
+      <Footer />
     </div>
   );
 }
